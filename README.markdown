@@ -160,22 +160,25 @@ RATE_LIMIT_REQUESTS_PER_MINUTE=45
 
 ### Limitations
 
-- **Gemini AI Live Session Limits**: The current setup with Gemini AI Live allows only 5 concurrent sessions at a time. This limitation can cause a fallback for many users during peak usage, leading to potential delays or unavailability of AI responses for some users.
+- **Gemini Live API Session Limits**: The current setup with Gemini AI Live allows only 5 concurrent sessions at a time. This limitation can cause a fallback for many users during peak usage, leading to potential delays or unavailability of AI responses for some users.
 - **Predefined Companions Only**: Users are restricted to interacting with the 5 predefined AI companions (EchoBuddy, Chef EchoBite, Dr. EchoCare, EchoFit, EchoMind). There is no option for users to create or customize their own companions, which limits personalization.
+- **Text-Only Interaction**: Supports only text-to-text communication, lacking image or audio input/output capabilities.
 
 ### Things We Can Do Further
 
-- **Scalable AI Service**: Build a custom AI service or integrate with a more scalable AI provider that can handle a large number of concurrent users, eliminating the session limitation imposed by Gemini AI Live.
+- **Scalable AI Service**: Build a custom AI service or integrate with a more scalable AI provider that can handle a large number of concurrent users, eliminating the session limitation imposed by Gemini Live API.
 - **Custom Companion Creation**: Introduce a feature where users can create personalized AI companions by defining their own system prompts, companion codes, and dedicated spaces. This would enhance user engagement by allowing tailored interactions.
 - **Premium Features**: Implement a premium subscription model that offers additional benefits, such as access to more companions, priority AI session slots, custom companion creation, and enhanced chat features (e.g., voice chat, advanced emoji sets).
+- **Image and Audio Support**: Enable features to allow users to upload images and audio files as inputs to the AI companions, as well as support audio output (e.g., text-to-speech for AI responses). This would make interactions more dynamic and accessible, catering to diverse user preferences.
+- **Extended Chat History with Vector Embeddings**: Utilize a solution like Mem0 to store chat history as vector embeddings, enabling longer session continuity and removing barriers to maintaining conversational context across multiple sessions.
 
 ### Challenges Faced During Building
 
 - **WebSocket Integration**: Setting up real-time WebSocket communication was challenging, particularly ensuring secure JWT-based authorization for WebSocket connections. We faced issues with maintaining persistent connections on Railway.app due to their 30-second timeout on `*.up.railway.app` domains, requiring us to recommend custom domains for production.
 - **Rate Limiting with Redis**: Implementing the sliding window algorithm for rate limiting using Redis-Cloud was complex. Configuring Redis with proper TLS settings and ensuring it worked seamlessly with the Express middleware required significant debugging and testing.
-- **Gemini AI Live Integration**: Integrating Gemini AI Live for real-time AI responses posed challenges due to its session limits and occasional latency. We had to implement fallback mechanisms and error handling to manage scenarios where the session limit was reached.
+- **Gemini Live API Integration**: Integrating Gemini Live API for real-time AI responses presented difficulties due to its session limits and occasional latency. Managing chat history retrieval before initiating new sessions to maintain context continuity required careful optimization. Fallback mechanisms and robust error handling were implemented to address session limit issues.
 - **Responsive Design**: Ensuring a fully responsive design across devices was challenging, especially with the chat interface’s sidebar and mobile menu. We had to carefully design the layout using Tailwind CSS and test extensively to ensure usability on smaller screens.
-- **Chat Persistence and Context Syncing**: Synchronizing chat context across sessions while maintaining performance was difficult. Storing and retrieving chat history from MongoDB in real-time required optimization to avoid latency, especially during high user activity.
+- **Chat Persistence and Context Syncing**: Synchronizing chat context across sessions while maintaining performance was difficult. Optimizing MongoDB storage and retrieval of chat history to minimize latency during high user activity required significant effort and fine-tuning.
 
 ## License
 
